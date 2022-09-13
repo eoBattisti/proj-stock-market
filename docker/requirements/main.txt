@@ -1,0 +1,15 @@
+celery==5.2.3
+Django==4.0.3
+faker==13.3.2
+Pillow==7.2.0
+pydot==1.4.2
+pyparsing==3.0.7
+pytz==2021.3
+requests==2.27.1
+django-redis==5.2.0
+djangorestframework==3.13.1
+django-cors-headers==3.11.0
+django-extensions==3.1.5
+drf-yasg==1.20.0
+psycopg2-binary==2.9.3
+environ==1.0
