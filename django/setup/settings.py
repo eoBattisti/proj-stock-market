@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+from kombu import Exchange, Queue
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,9 +45,11 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'corsheaders',
+    'django_celery_beat',
+    'django_celery_results',
     'django_extensions',
     'rest_framework',
-    'corsheaders',
 ]
 
 PROJECT_APPS = [
@@ -102,7 +105,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_NAME'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',
+        'HOST': 'database',
         'PORT': 5432,
     }
 }
@@ -149,3 +152,25 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+BROKER_POOL_LIMIT = 100
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_IGNORE_RESULT = True
+
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+CELERY_TASK_DEFAULT_EXCHANGE = 'default'
+
+CELERY_QUEUES = (
+    Queue('default', Exchange('default'), routing_key='default_tasks'),
+)
+
+CELERY_ROUTES = {
+    '*': {
+        'queue': 'default', 'routing_key': 'default_tasks',
+    }
+}
+
+CELERY_RESULT_BACKEND = 'django-db'
