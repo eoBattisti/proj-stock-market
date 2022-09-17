@@ -3,35 +3,32 @@ services:
   redis:
     image: redis
     command: redis-server
+    container_name: stock_redis
     ports:
       - "14000:6379"
 
-  db:
+  database:
+    container_name: stock_database
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_NAME=root
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - database_data:/var/lib/postgresql/data
 
-  web:
-    build: .
+  django:
+    container_name: stock_app
+    build:
+      context: ./django
     restart: always
     command: python manage.py runserver 0.0.0.0:9000
-    env_file:
-      - .env
     ports:
       - "127.0.0.1:9000:9000"
     volumes:
-      - .:/code
-    environment:
-      - POSTGRES_NAME=root
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - ./django:/code
     links:
-      - db
+      - database
       - redis
     depends_on:
-      - db
+      - database
       - redis
+
+volumes:
+  database_data:
