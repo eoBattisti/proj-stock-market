@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+echo "Generating Migrations"
+python manage.py makemigrations
+echo "Done!"
+
 echo "Migrate..."
 python manage.py migrate --noinput
 echo "Migrated!"

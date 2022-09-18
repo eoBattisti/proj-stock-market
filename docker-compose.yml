@@ -16,13 +16,13 @@ services:
   django:
     container_name: stock_app
     build:
-      context: ./django
+      context: ./django/
     restart: always
     command: python manage.py runserver 0.0.0.0:9000
     ports:
       - "127.0.0.1:9000:9000"
     volumes:
-      - ./django:/code
+      - ./django/:/code
     links:
       - database
       - redis

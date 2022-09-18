@@ -1,0 +1,32 @@
+[
+  {
+    "model": "core.stock",
+    "pk": 1,
+    "fields": {
+      "symbol": "BBSE3",
+      "name": "BB Seguridade",
+      "is_owned": false,
+      "is_desired": true
+    }
+  },
+  {
+    "model": "core.stock",
+    "pk": 2,
+    "fields": {
+      "symbol": "TAEE11",
+      "name": "Taesa",
+      "is_owned": false,
+      "is_desired": true
+    }
+  },
+  {
+    "model": "core.stock",
+    "pk": 3,
+    "fields": {
+      "symbol": "ITSA4",
+      "name": "Itausa",
+      "is_owned": false,
+      "is_desired": true
+    }
+  }
+]
